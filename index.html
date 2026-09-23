@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="INTEGRA INDUSTRIAL S.A.S. - Soluciones integrales de ingeniería, operaciones y servicios industriales.">
+
+    <title>INTEGRA INDUSTRIAL S.A.S.</title>
+
+    <!-- Hoja de estilos -->
+    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* CONTACTO FLOTANTE - componente independiente */
+        .contacto-flotante {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .contacto-float {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 54px;
+            min-height: 54px;
+            padding: 7px 9px 7px 8px;
+            border-radius: 32px;
+            background: #ffffff;
+            color: #16324a;
+            text-decoration: none;
+            box-shadow: 0 10px 28px rgba(15, 42, 61, 0.18);
+            border: 1px solid rgba(15, 42, 61, 0.08);
+            overflow: hidden;
+            transition: transform .25s ease, box-shadow .25s ease, max-width .35s ease;
+            max-width: 58px;
+        }
+
+        .contacto-float:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 14px 34px rgba(15, 42, 61, 0.24);
+            max-width: 310px;
+        }
+
+        .contacto-float-icon {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .contacto-float.whatsapp .contacto-float-icon {
+            background: #25D366;
+            color: #fff;
+        }
+
+        .contacto-float.llamada .contacto-float-icon {
+            background: #0c5f88;
+            color: #fff;
+        }
+
+        .contacto-float.correo .contacto-float-icon {
+            background: #16324a;
+            color: #fff;
+        }
+
+        .contacto-float-text {
+            display: flex;
+            flex-direction: column;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateX(8px);
+            transition: opacity .2s ease, transform .25s ease;
+        }
+
+        .contacto-float:hover .contacto-float-text {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .contacto-float-text strong {
+            font-size: 13px;
+            line-height: 1.2;
+        }
+
+        .contacto-float-text small {
+            margin-top: 3px;
+            font-size: 11px;
+            color: #687985;
+        }
+
+        .volver-arriba {
+            width: 48px;
+            height: 48px;
+            margin-top: 3px;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: #16324a;
+            color: #fff;
+            text-decoration: none;
+            font-size: 23px;
+            font-weight: 700;
+            box-shadow: 0 10px 24px rgba(15, 42, 61, 0.22);
+            transition: transform .25s ease, background .25s ease;
+        }
+
+        .volver-arriba:hover {
+            transform: translateY(-3px);
+            background: #0c5f88;
+        }
+
+        @media (max-width: 700px) {
+            .contacto-flotante {
+                right: 14px;
+                bottom: 14px;
+                gap: 7px;
+            }
+
+            .contacto-float {
+                max-width: 54px;
+                padding: 7px;
+            }
+
+            .contacto-float:hover {
+                max-width: 54px;
+            }
+
+            .contacto-float-text {
+                display: none;
+            }
+
+            .contacto-float-icon {
+                width: 40px;
+                min-width: 40px;
+                height: 40px;
+            }
+        }
+    
+        /* CONTACTO / MAPA */
+        .contacto .datos-contacto p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .contacto-direccion {
+            margin-top: 28px;
+            padding: 22px;
+            background: #f4f7f9;
+            border: 1px solid #dce5eb;
+            border-radius: 10px;
+        }
+
+        .contacto-direccion h3 {
+            margin: 0 0 8px;
+            color: #073b63;
+            font-size: 20px;
+        }
+
+        .contacto-direccion p {
+            margin: 0 0 15px;
+            color: #667784;
+        }
+
+        .boton-mapa {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 11px 17px;
+            background: #0067a8;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .25s ease;
+        }
+
+        .boton-mapa:hover {
+            background: #073b63;
+            transform: translateY(-2px);
+        }
+
+        .mapa-contenedor {
+            margin-top: 35px;
+            width: 100%;
+            min-height: 420px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(15, 42, 61, .14);
+            border: 1px solid #dce5eb;
+            background: #e9eef2;
+        }
+
+        .mapa-contenedor iframe {
+            width: 100%;
+            height: 420px;
+            border: 0;
+            display: block;
+        }
+
+        .whatsapp-img {
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            display: block;
+            border-radius: 50%;
+        }
+
+        @media (max-width: 700px) {
+            .mapa-contenedor,
+            .mapa-contenedor iframe {
+                height: 320px;
+                min-height: 320px;
+            }
+        }
+
+    
+        /* CIFRAS ANIMADAS */
+        .cifra strong {
+            display: block;
+            font-size: 42px;
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .cifra {
+            text-align: center;
+        }
+
+        .cifra span {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         ENCABEZADO
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="contenedor header-contenido">
+
+            <!-- LOGO -->
+
+            <a href="#inicio" class="logo">
+
+                <img src="img/logo.png"
+                     alt="INTEGRA INDUSTRIAL S.A.S.">
+
+            </a>
+
+
+            <!-- MENÚ -->
+
+            <nav class="menu">
+
+                <a href="#inicio">Inicio</a>
+
+                <a href="#nosotros">Nosotros</a>
+
+                <a href="#servicios">Servicios</a>
+
+                <a href="#proyectos">Proyectos</a>
+
+                <a href="#hseq">HSEQ</a>
+
+                <a href="#certificaciones">Certificaciones</a>
+
+                <a href="#contacto">Contacto</a>
+
+            </nav>
+
+
+            <!-- BOTÓN MENÚ MÓVIL -->
+
+            <button class="menu-movil" aria-label="Abrir menú">
+
+                ☰
+
+            </button>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         INICIO / HERO
+    ====================================================== -->
+
+    <main>
+
+
+        <section id="inicio" class="hero">
+
+            <div class="hero-contenido contenedor">
+
+                <p class="hero-etiqueta">
+                    INGENIERÍA · OPERACIONES · SOLUCIONES SOSTENIBLES
+                </p>
+
+
+                <h1>
+                    Soluciones que
+                    <span>impulsan</span>
+                    la industria
+                </h1>
+
+
+                <p class="hero-texto">
+
+                    Integramos ingeniería, tecnología y talento humano
+                    para desarrollar operaciones más seguras,
+                    eficientes y sostenibles.
+
+                </p>
+
+
+                <div class="hero-botones">
+
+                    <a href="#nosotros" class="boton boton-principal">
+                        Conócenos
+                    </a>
+
+                    <a href="#servicios" class="boton boton-secundario">
+                        Nuestros servicios
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CIFRAS
+        ====================================================== -->
+
+        <section class="cifras">
+
+            <div class="contenedor cifras-grid">
+
+
+                <div class="cifra">
+
+                    <strong>10+</strong>
+
+                    <span>Años de experiencia</span>
+
+                </div>
+
+
+                <div class="cifra">
+
+                    <strong>150+</strong>
+
+                    <span>Proyectos ejecutados</span>
+
+                </div>
+
+
+                <div class="cifra">
+
+                    <strong>50+</strong>
+
+                    <span>Profesionales</span>
+
+                </div>
+
+
+                <div class="cifra">
+
+                    <strong>98%</strong>
+
+                    <span>Satisfacción de clientes</span>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             NOSOTROS
+        ====================================================== -->
+
+        <section id="nosotros" class="seccion nosotros">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion">
+
+                    <span>QUIÉNES SOMOS</span>
+
+                    <h2>
+                        Ingeniería con propósito,
+                        soluciones con futuro.
+                    </h2>
+
+                </div>
+
+
+                <div class="nosotros-grid">
+
+
+                    <div class="nosotros-texto">
+
+                        <p>
+
+                            <strong>INTEGRA INDUSTRIAL S.A.S.</strong>
+                            es una empresa colombiana dedicada al
+                            desarrollo de soluciones integrales de
+                            ingeniería, operaciones y servicios para
+                            el sector industrial y energético.
+
+                        </p>
+
+
+                        <p>
+
+                            Integramos conocimiento técnico,
+                            experiencia operacional, innovación y
+                            una sólida cultura de seguridad para
+                            acompañar a nuestros clientes en el
+                            desarrollo de proyectos y operaciones
+                            eficientes, confiables y sostenibles.
+
+                        </p>
+
+
+                        <a href="#historia" class="enlace">
+
+                            Conoce nuestra historia →
+
+                        </a>
+
+                    </div>
+
+
+                    <div class="nosotros-imagen">
+
+                        <img src="img/nosotros.png"
+                            
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             SERVICIOS
+        ====================================================== -->
+
+        <section id="servicios" class="seccion servicios">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion centrado">
+
+                    <span>NUESTROS SERVICIOS</span>
+
+                    <h2>
+                        Soluciones para cada desafío
+                    </h2>
+
+                    <p>
+
+                        Integramos diferentes capacidades
+                        para acompañar a nuestros clientes
+                        en cada etapa de sus proyectos.
+
+                    </p>
+
+                </div>
+
+
+                <div class="servicios-grid">
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-ingenieria.png" alt="Ingeniería y Consultoría">
+
+
+                        </div>
+
+                        <h3>
+                            Ingeniería y Consultoría
+                        </h3>
+
+                        <p>
+
+                            Diseñamos soluciones orientadas
+                            a optimizar procesos,
+                            infraestructura y operaciones.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-mantenimiento.jpg" alt="Mantenimiento Industrial">
+                        </div>
+
+                        <h3>
+                            Mantenimiento Industrial
+                        </h3>
+
+                        <p>
+
+                            Estrategias de mantenimiento
+                            preventivo, correctivo y predictivo.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-operaciones.png" alt="Operaciones Industriales">
+                        </div>
+
+                        <h3>
+                            Operaciones Industriales
+                        </h3>
+
+                        <p>
+
+                            Soporte especializado para
+                            operaciones eficientes y confiables.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-hseq.jpg" alt="Gestión HSEQ">
+                        </div>
+
+                        <h3>
+                            Gestión HSEQ
+                        </h3>
+
+                        <p>
+
+                            Calidad, seguridad, salud,
+                            ambiente y seguridad vial.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-logistica.jpg" alt="Logística y Transporte">
+                        </div>
+
+                        <h3>
+                            Logística y Transporte
+                        </h3>
+
+                        <p>
+
+                            Soluciones logísticas para el
+                            movimiento seguro y eficiente
+                            de recursos.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+
+                    <article class="servicio">
+
+                        <div class="servicio-imagen">
+                            <img src="img/servicio-ambiental.jpg" alt="Gestión Ambiental">
+                        </div>
+
+                        <h3>
+                            Gestión Ambiental
+                        </h3>
+
+                        <p>
+
+                            Estrategias orientadas a la
+                            prevención de impactos ambientales.
+
+                        </p>
+
+                        <a href="#">
+                            Conocer servicio →
+                        </a>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             HSEQ
+        ====================================================== -->
+
+        <section id="hseq" class="seccion hseq">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion">
+
+                    <span>NUESTRO COMPROMISO</span>
+
+                    <h2>
+                        La seguridad y la calidad
+                        están presentes en cada decisión.
+                    </h2>
+
+                </div>
+
+
+                <div class="hseq-grid">
+
+
+                    <div class="hseq-item">
+
+                        <span>01</span>
+
+                        <h3>Calidad</h3>
+
+                        <p>
+
+                            Mejora continua y orientación
+                            hacia la satisfacción de nuestros clientes.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="hseq-item">
+
+                        <span>02</span>
+
+                        <h3>Seguridad y Salud</h3>
+
+                        <p>
+
+                            Prevención de riesgos y protección
+                            de nuestros colaboradores.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="hseq-item">
+
+                        <span>03</span>
+
+                        <h3>Medio Ambiente</h3>
+
+                        <p>
+
+                            Operaciones responsables y
+                            uso eficiente de los recursos.
+
+                        </p>
+
+                    </div>
+
+
+                    <div class="hseq-item">
+
+                        <span>04</span>
+
+                        <h3>Seguridad Vial</h3>
+
+                        <p>
+
+                            Gestión de riesgos para una
+                            movilidad segura.
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             PROYECTOS
+        ====================================================== -->
+
+        <section id="proyectos" class="seccion proyectos">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion centrado">
+
+                    <span>EXPERIENCIA</span>
+
+                    <h2>
+                        Proyectos destacados
+                    </h2>
+
+                </div>
+
+
+                <div class="proyectos-grid">
+
+
+                    <article class="proyecto">
+
+                        <div class="proyecto-imagen">
+                             <img src="img/proyectoandino.png" alt="Proyecto Andino">
+                        </div>
+
+                        <div class="proyecto-info">
+
+                            <span>ENERGÉTICO · CASANARE</span>
+
+                            <h3>
+                                Proyecto Andino
+                            </h3>
+
+                            <p>
+                                Servicios integrales de ingeniería
+                                y soporte operacional.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="proyecto">
+
+                        <div class="proyecto-imagen">
+                            <img src="img/proyectohorizonte.jpg" alt="Proyecto Horizonte">
+                        </div>
+
+                        <div class="proyecto-info">
+
+                            <span>INDUSTRIAL · BARRANCABERMEJA</span>
+
+                            <h3>
+                                Proyecto Horizonte
+                            </h3>
+
+                            <p>
+                                Estrategias de mantenimiento
+                                y confiabilidad operacional.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="proyecto">
+
+                        <div class="proyecto-imagen">
+                             <img src="img/Proyecto 360.jpg" alt="Proyecto 360"> 
+                        </div>
+
+                        <div class="proyecto-info">
+
+                            <span>LOGÍSTICA · BOGOTÁ</span>
+
+                            <h3>
+                                Proyecto 360
+                            </h3>
+
+                            <p>
+                                Gestión integral de transporte
+                                y logística.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+
+                    <article class="proyecto">
+
+                        <div class="proyecto-imagen">
+                            <img src="img/proyecto verde.jpg" alt="Proyecto Verde">
+                        </div>
+
+                        <div class="proyecto-info">
+
+                            <span>AMBIENTAL · META</span>
+
+                            <h3>
+                                Proyecto Verde
+                            </h3>
+
+                            <p>
+                                Estrategias de gestión ambiental
+                                y sostenibilidad.
+                            </p>
+
+                        </div>
+
+                    </article>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             HISTORIA / LINEA DE TIEMPO
+        ====================================================== -->
+
+        <section id="historia" class="seccion historia">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion centrado">
+
+                    <span>NUESTRA HISTORIA</span>
+
+                    <h2>
+                        Una trayectoria construida
+                        paso a paso.
+                    </h2>
+
+                </div>
+
+
+                <div class="timeline">
+
+
+                    <div class="timeline-item">
+
+                        <span class="timeline-año">
+                            2020
+                        </span>
+
+                        <h3>
+                            Nace INTEGRA
+                        </h3>
+
+                        <p>
+                            Inicio de operaciones.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <span class="timeline-año">
+                            2021
+                        </span>
+
+                        <h3>
+                            Primeros proyectos
+                        </h3>
+
+                        <p>
+                            Ampliamos nuestras capacidades.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <span class="timeline-año">
+                            2023
+                        </span>
+
+                        <h3>
+                            Expansión
+                        </h3>
+
+                        <p>
+                            Nuevas líneas de servicios.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <span class="timeline-año">
+                            2025
+                        </span>
+
+                        <h3>
+                            Consolidación
+                        </h3>
+
+                        <p>
+                            Fortalecemos nuestra operación.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item">
+
+                        <span class="timeline-año">
+                            2026
+                        </span>
+
+                        <h3>
+                            Innovación
+                        </h3>
+
+                        <p>
+                            Tecnología para transformar
+                            nuestros servicios.
+                        </p>
+
+                    </div>
+
+
+                    <div class="timeline-item futuro">
+
+                        <span class="timeline-año">
+                            2030
+                        </span>
+
+                        <h3>
+                            Nuestra proyección
+                        </h3>
+
+                        <p>
+                            Ser referentes en Colombia.
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CERTIFICACIONES
+        ====================================================== -->
+
+        <section id="certificaciones" class="seccion certificaciones">
+
+            <div class="contenedor">
+
+
+                <div class="titulo-seccion centrado">
+
+                    <span>ESTÁNDARES</span>
+
+                    <h2>
+                        Nuestro compromiso con la excelencia
+                    </h2>
+
+                    <p>
+                        Modelo de certificaciones y estándares
+                        de referencia para nuestro sistema de gestión.
+                    </p>
+
+                </div>
+
+
+                <div class="certificaciones-grid">
+
+
+                    <div class="certificacion">
+
+                        <strong>ISO</strong>
+
+                        <span>9001</span>
+
+                        <small>
+                            Gestión de Calidad
+                        </small>
+
+                    </div>
+
+
+                    <div class="certificacion">
+
+                        <strong>ISO</strong>
+
+                        <span>14001</span>
+
+                        <small>
+                            Gestión Ambiental
+                        </small>
+
+                    </div>
+
+
+                    <div class="certificacion">
+
+                        <strong>ISO</strong>
+
+                        <span>45001</span>
+
+                        <small>
+                            Seguridad y Salud
+                        </small>
+
+                    </div>
+
+
+                    <div class="certificacion">
+
+                        <strong>RUC</strong>
+
+                        <span>HSEQ</span>
+
+                        <small>
+                            Gestión Integral
+                        </small>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =====================================================
+             CONTACTO
+        ====================================================== -->
+
+        <section id="contacto" class="seccion contacto">
+
+            <div class="contenedor">
+
+                <div class="titulo-seccion centrado">
+                    <span>HABLEMOS</span>
+                    <h2>¿Tienes un proyecto? Hablemos.</h2>
+                    <p>
+                        Nuestro equipo está preparado para conocer sus necesidades
+                        y desarrollar soluciones adaptadas a los desafíos de su operación.
+                    </p>
+                </div>
+
+                <div class="contacto-grid">
+
+                    <div>
+
+                        <div class="contacto-direccion">
+                            <h3>📍 ¿Dónde estamos?</h3>
+                            <p>
+                                <strong>INTEGRA INDUSTRIAL S.A.S.</strong><br>
+                                Bogotá D.C., Colombia
+                            </p>
+
+                            <a class="boton-mapa"
+                               href="https://www.google.com/maps/search/?api=1&query=Bogot%C3%A1%20D.C.%2C%20Colombia"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                🗺️ Cómo llegar
+                            </a>
+                        </div>
+
+                        <div class="datos-contacto">
+                            <p>📞 +57 (601) 742 3810</p>
+                            <p>📱 +57 310 456 7821</p>
+                            <p>✉️ contacto@integraindustrial.com.co</p>
+                        </div>
+
+                    </div>
+
+                    <form class="formulario">
+
+                        <input type="text" placeholder="Nombre" required>
+
+                        <input type="text" placeholder="Empresa">
+
+                        <input type="email" placeholder="Correo electrónico" required>
+
+                        <input type="tel" placeholder="Teléfono">
+
+                        <textarea placeholder="¿Cómo podemos ayudarte?" rows="5"></textarea>
+
+                        <button type="submit" class="boton boton-principal">
+                            Enviar solicitud
+                        </button>
+
+                    </form>
+
+                </div>
+
+                <div class="mapa-contenedor">
+                    <iframe
+                        src="https://www.google.com/maps?q=Bogot%C3%A1%20D.C.%2C%20Colombia&output=embed"
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="Mapa de ubicación de INTEGRA INDUSTRIAL en Bogotá">
+                    </iframe>
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =====================================================
+         CONTACTO FLOTANTE
+    ====================================================== -->
+
+    <div class="contacto-flotante" aria-label="Opciones de contacto">
+        <a class="contacto-float whatsapp" href="https://wa.me/573104567821?text=Hola%20INTEGRA%20INDUSTRIAL,%20quiero%20recibir%20información%20sobre%20sus%20servicios." target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
+            <span class="contacto-float-icon" aria-hidden="true"><img class="whatsapp-img" src="img/whatsapp.jpg" alt=""></span>
+            <span class="contacto-float-text">
+                <strong>¿Hablamos?</strong>
+                <small>Escríbenos por WhatsApp</small>
+            </span>
+        </a>
+
+        <a class="contacto-float llamada" href="tel:+576017423810" aria-label="Llamar a INTEGRA INDUSTRIAL">
+            <span class="contacto-float-icon" aria-hidden="true">☎</span>
+            <span class="contacto-float-text">
+                <strong>Llámanos</strong>
+                <small>+57 (601) 742 3810</small>
+            </span>
+        </a>
+
+        <a class="contacto-float correo" href="mailto:contacto@integraindustrial.com.co" aria-label="Enviar correo a INTEGRA INDUSTRIAL">
+            <span class="contacto-float-icon" aria-hidden="true">✉</span>
+            <span class="contacto-float-text">
+                <strong>Contáctanos</strong>
+                <small>Enviar correo</small>
+            </span>
+        </a>
+
+        <a class="volver-arriba" href="#inicio" aria-label="Volver al inicio">↑</a>
+    </div>
+
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+        <div class="contenedor footer-contenido">
+
+
+            <div>
+
+                <strong>
+                    INTEGRA INDUSTRIAL S.A.S.
+                </strong>
+
+                <p>
+                    Ingeniería · Operaciones · Soluciones sostenibles
+                </p>
+
+            </div>
+
+
+            <div>
+
+                <p>
+                    © 2026 INTEGRA INDUSTRIAL S.A.S.
+                </p>
+
+                <p>
+                    Todos los derechos reservados.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </footer>
+
+
+
+    <!-- JavaScript -->
+
+    
+        <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const cifras = document.querySelectorAll(".cifra strong");
+
+            const animarCifra = (elemento) => {
+                const texto = elemento.textContent.trim();
+                const match = texto.match(/^(\d+)(.*)$/);
+                if (!match) return;
+
+                const objetivo = parseInt(match[1], 10);
+                const sufijo = match[2] || "";
+                const duracion = 1600;
+                const inicio = performance.now();
+
+                function actualizar(tiempo) {
+                    const progreso = Math.min((tiempo - inicio) / duracion, 1);
+                    const suavizado = 1 - Math.pow(1 - progreso, 3);
+                    const valor = Math.floor(objetivo * suavizado);
+
+                    elemento.textContent = valor + sufijo;
+
+                    if (progreso < 1) {
+                        requestAnimationFrame(actualizar);
+                    } else {
+                        elemento.textContent = objetivo + sufijo;
+                    }
+                }
+
+                elemento.textContent = "0" + sufijo;
+                requestAnimationFrame(actualizar);
+            };
+
+            const observadorCifras = new IntersectionObserver((entradas, observador) => {
+                entradas.forEach((entrada) => {
+                    if (entrada.isIntersecting) {
+                        animarCifra(entrada.target);
+                        observador.unobserve(entrada.target);
+                    }
+                });
+            }, { threshold: 0.45 });
+
+            cifras.forEach((cifra) => observadorCifras.observe(cifra));
+        });
+        </script>
+
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
